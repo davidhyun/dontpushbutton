@@ -1,0 +1,301 @@
+/* {{componentName}} Component Styles */
+
+.{{cssClassName}} {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  {{containerStyles}}
+}
+
+/* Loading States */
+.{{cssClassName}}.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #7f8c8d;
+  font-size: 1.1em;
+}
+
+/* Error States */
+.error {
+  text-align: center;
+  padding: 20px;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 10px;
+  color: #e74c3c;
+  margin: 20px 0;
+}
+
+.error button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.error button:hover {
+  background: #c0392b;
+}
+
+/* Primary Button Styles */
+.{{buttonClassName}} {
+  padding: {{buttonPadding}};
+  font-size: {{buttonFontSize}};
+  font-weight: {{buttonFontWeight}};
+  color: {{buttonTextColor}};
+  background: {{buttonBackground}};
+  border: none;
+  border-radius: {{buttonBorderRadius}};
+  cursor: pointer;
+  box-shadow: {{buttonShadow}};
+  transition: all 0.3s ease;
+  {{additionalButtonStyles}}
+}
+
+.{{buttonClassName}}:hover {
+  transform: translateY(-3px);
+  box-shadow: {{buttonHoverShadow}};
+  {{hoverStyles}}
+}
+
+.{{buttonClassName}}:active {
+  transform: translateY(0);
+  box-shadow: {{buttonActiveShadow}};
+}
+
+.{{buttonClassName}}:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Text Styles */
+.{{cssClassName}} h1 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.{{cssClassName}} h2 {
+  color: #e74c3c;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.{{cssClassName}} h3 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.{{cssClassName}} p {
+  color: #7f8c8d;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+/* Message Styles */
+.message {
+  margin: 20px 0;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.message.success {
+  color: #27ae60;
+  background: rgba(39, 174, 96, 0.1);
+  border: 1px solid rgba(39, 174, 96, 0.2);
+}
+
+.message.warning {
+  color: #f39c12;
+  background: rgba(243, 156, 18, 0.1);
+  border: 1px solid rgba(243, 156, 18, 0.2);
+}
+
+.message.failure {
+  color: #e74c3c;
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.2);
+}
+
+/* Card/Panel Styles */
+.{{cssClassName}}-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: {{cardPadding}};
+  border-radius: {{cardBorderRadius}};
+  box-shadow: {{cardShadow}};
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  {{additionalCardStyles}}
+}
+
+/* List Styles */
+.{{cssClassName}}-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.{{cssClassName}}-list-item {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.{{cssClassName}}-list-item:last-child {
+  border-bottom: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale({{pulseScale}});
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+/* Game-specific animations */
+.{{cssClassName}}.game-over {
+  animation: shake 0.5s ease-in-out;
+}
+
+.{{cssClassName}}-animated {
+  animation: {{animationType}} {{animationDuration}} {{animationTiming}};
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .{{cssClassName}} {
+    padding: 10px;
+    {{mobileStyles}}
+  }
+  
+  .{{buttonClassName}} {
+    font-size: {{mobileFontSize}};
+    padding: {{mobilePadding}};
+  }
+  
+  .{{cssClassName}}-card {
+    margin: 10px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .{{cssClassName}} h1 {
+    font-size: 1.5em;
+  }
+  
+  .{{cssClassName}} h2 {
+    font-size: 1.3em;
+  }
+  
+  .{{buttonClassName}} {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Dark mode support (if needed) */
+@media (prefers-color-scheme: dark) {
+  .{{cssClassName}} {
+    background: #2c3e50;
+    color: #ecf0f1;
+  }
+  
+  .{{cssClassName}}-card {
+    background: rgba(52, 73, 94, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+/*
+CSS Template Usage:
+1. Replace {{componentName}} with your component name
+2. Replace {{cssClassName}} with main CSS class name (kebab-case)
+3. Replace {{buttonClassName}} with button CSS class name
+4. Replace {{containerStyles}} with container-specific styles
+5. Replace {{buttonPadding}} with button padding (e.g., "15px 30px")
+6. Replace {{buttonFontSize}} with button font size (e.g., "1.2em")
+7. Replace {{buttonFontWeight}} with font weight (e.g., "600")
+8. Replace {{buttonTextColor}} with text color (e.g., "white")
+9. Replace {{buttonBackground}} with background (e.g., "linear-gradient(45deg, #e74c3c, #c0392b)")
+10. Replace {{buttonBorderRadius}} with border radius (e.g., "10px")
+11. Replace {{buttonShadow}} with box shadow
+12. Replace {{buttonHoverShadow}} with hover shadow
+13. Replace {{buttonActiveShadow}} with active shadow
+14. Replace {{hoverStyles}} with additional hover styles
+15. Replace {{additionalButtonStyles}} with extra button styles
+16. Replace {{cardPadding}} with card padding
+17. Replace {{cardBorderRadius}} with card border radius
+18. Replace {{cardShadow}} with card shadow
+19. Replace {{additionalCardStyles}} with extra card styles
+20. Replace {{pulseScale}} with pulse animation scale (e.g., "1.05")
+21. Replace {{animationType}} with animation name
+22. Replace {{animationDuration}} with duration (e.g., "0.3s")
+23. Replace {{animationTiming}} with timing function (e.g., "ease-in-out")
+24. Replace {{mobileStyles}} with mobile-specific styles
+25. Replace {{mobileFontSize}} with mobile font size
+26. Replace {{mobilePadding}} with mobile padding
+
+Example:
+- cssClassName: "game-button"
+- buttonClassName: "dont-push-button"
+- buttonBackground: "linear-gradient(45deg, #e74c3c, #c0392b)"
+- buttonBorderRadius: "50%"
+- pulseScale: "1.05"
+*/
