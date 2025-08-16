@@ -1,0 +1,140 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+.container {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 90%;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 2em;
+}
+
+.instructions {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.game-area {
+    margin: 40px 0;
+}
+
+.dont-push-button {
+    padding: 20px 40px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+}
+
+.dont-push-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4);
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+}
+
+.dont-push-button:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 10px rgba(231, 76, 60, 0.3);
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.stats {
+    margin: 20px 0;
+    font-size: 1.1em;
+}
+
+.stats p {
+    margin: 10px 0;
+    color: #2c3e50;
+}
+
+.stats span {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.message {
+    margin: 20px 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    min-height: 30px;
+}
+
+.message.success {
+    color: #27ae60;
+}
+
+.message.failure {
+    color: #e74c3c;
+}
+
+.reset-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    color: white;
+    background: #3498db;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.reset-button:hover {
+    background: #2980b9;
+}
+
+.game-over {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-10px);
+    }
+    75% {
+        transform: translateX(10px);
+    }
+}
