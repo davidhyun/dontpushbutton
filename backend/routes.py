@@ -1,61 +1,59 @@
-from flask import Blueprint, request, jsonify
-from .models import ScoreManager, GameScore
+from fastapi import APIRouter, HTTPException
+from typing import List
+from .models import ScoreManager, GameScore, ScoreRequest, ScoreResponse, StatsResponse, HealthResponse, SaveScoreResponse
 
-api = Blueprint('api', __name__)
+api = APIRouter()
 score_manager = ScoreManager()
 
 
-@api.route('/leaderboard', methods=['GET'])
+@api.get('/leaderboard', response_model=List[ScoreResponse])
 def get_leaderboard():
     """리더보드 조회 - 시간 순으로 정렬된 상위 점수들"""
     try:
         scores = score_manager.get_leaderboard()
-        return jsonify([score.to_dict() for score in scores])
+        return [ScoreResponse(**score.to_dict()) for score in scores]
     except Exception as e:
-        return jsonify({'error': '리더보드를 가져올 수 없습니다'}), 500
+        raise HTTPException(status_code=500, detail='리더보드를 가져올 수 없습니다')
 
 
-@api.route('/score', methods=['POST'])
-def save_score():
+@api.post('/score', response_model=SaveScoreResponse)
+def save_score(score_data: ScoreRequest):
     """새로운 게임 점수 저장"""
     try:
-        data = request.get_json()
+        # 입력 검증 강화
+        if score_data.time < 0 or score_data.time > 86400:  # 24시간 제한
+            raise HTTPException(status_code=400, detail='유효하지 않은 시간입니다 (0-86400초)')
+        if score_data.clicks < 0 or score_data.clicks > 1000:  # 클릭 수 제한  
+            raise HTTPException(status_code=400, detail='유효하지 않은 클릭 수입니다 (0-1000회)')
         
-        if not data:
-            return jsonify({'error': '데이터가 필요합니다'}), 400
-        
-        time = data.get('time', 0)
-        clicks = data.get('clicks', 0)
-        
-        if time < 0 or clicks < 0:
-            return jsonify({'error': '유효하지 않은 점수입니다'}), 400
-        
-        new_score = GameScore(time=time, clicks=clicks)
+        new_score = GameScore(time=score_data.time, clicks=score_data.clicks)
         saved_score = score_manager.add_score(new_score)
         
-        return jsonify({
-            'message': '점수가 저장되었습니다!',
-            'score': saved_score.to_dict()
-        })
+        return SaveScoreResponse(
+            message='점수가 저장되었습니다!',
+            score=ScoreResponse(**saved_score.to_dict())
+        )
     
+    except HTTPException:
+        raise
     except Exception as e:
-        return jsonify({'error': '점수를 저장할 수 없습니다'}), 500
+        raise HTTPException(status_code=500, detail='점수를 저장할 수 없습니다')
 
 
-@api.route('/stats', methods=['GET'])
+@api.get('/stats', response_model=StatsResponse)
 def get_stats():
     """게임 통계 정보 조회"""
     try:
         stats = score_manager.get_stats()
-        return jsonify(stats)
+        return StatsResponse(**stats)
     except Exception as e:
-        return jsonify({'error': '통계를 가져올 수 없습니다'}), 500
+        raise HTTPException(status_code=500, detail='통계를 가져올 수 없습니다')
 
 
-@api.route('/health', methods=['GET'])
+@api.get('/health', response_model=HealthResponse)
 def health_check():
     """서버 상태 확인"""
-    return jsonify({
-        'status': 'healthy',
-        'message': '서버가 정상적으로 작동 중입니다!'
-    })
+    return HealthResponse(
+        status='healthy',
+        message='서버가 정상적으로 작동 중입니다!'
+    )

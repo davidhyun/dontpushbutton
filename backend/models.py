@@ -1,8 +1,9 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import json
 import os
+from pydantic import BaseModel
 
 
 @dataclass
@@ -29,6 +30,31 @@ class GameScore:
             clicks=data.get('clicks', 0),
             timestamp=data.get('timestamp')
         )
+
+
+# Pydantic 모델들 (FastAPI용)
+class ScoreRequest(BaseModel):
+    time: int
+    clicks: int
+
+class ScoreResponse(BaseModel):
+    time: int
+    clicks: int
+    timestamp: str
+
+class StatsResponse(BaseModel):
+    total_games: int
+    best_time: int
+    average_time: float
+    total_clicks: int
+
+class HealthResponse(BaseModel):
+    status: str
+    message: str
+
+class SaveScoreResponse(BaseModel):
+    message: str
+    score: ScoreResponse
 
 
 class ScoreManager:

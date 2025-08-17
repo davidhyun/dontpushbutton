@@ -2,7 +2,7 @@
 
 > "참을 수 있을까요? 진짜로 안 누를 수 있을까요?" 🤔
 
-React 프론트엔드와 Python Flask 백엔드로 구성된 중독성 있는 인내심 테스트 게임입니다.
+React 프론트엔드와 Python FastAPI 백엔드로 구성된 중독성 있는 인내심 테스트 게임입니다.
 
 ## 🎯 게임 규칙
 
@@ -31,8 +31,11 @@ pip install -r requirements.txt
 
 # 서버 실행
 python server.py
+# 또는
+uvicorn server:app --reload
 ```
-🌐 서버: http://localhost:8000
+🌐 서버: http://localhost:8000  
+📖 API 문서: http://localhost:8000/docs
 
 ### 3. 프론트엔드 실행
 ```bash
@@ -58,10 +61,10 @@ dontpushbutton/
 │   │   └── api.js              # API 통신 로직
 │   ├── App.js                  # 메인 앱 컴포넌트
 │   └── App.css                 # 스타일시트
-├── 📁 backend/                 # Flask 백엔드
-│   ├── models.py               # 데이터 모델
-│   └── routes.py               # API 라우트
-├── server.py                   # Flask 서버 엔트리포인트
+├── 📁 backend/                 # FastAPI 백엔드
+│   ├── models.py               # 데이터 모델 (Pydantic 포함)
+│   └── routes.py               # API 라우터
+├── server.py                   # FastAPI 서버 엔트리포인트
 ├── requirements.txt            # Python 의존성
 └── package.json               # Node.js 의존성
 ```
@@ -74,6 +77,7 @@ dontpushbutton/
 | `POST` | `/score` | 💾 점수 저장 |
 | `GET` | `/stats` | 📊 게임 통계 |
 | `GET` | `/health` | 💚 서버 상태 확인 |
+| `GET` | `/docs` | 📖 자동 생성된 API 문서 (Swagger UI) |
 
 ### 점수 저장 예시
 ```bash
@@ -81,6 +85,11 @@ curl -X POST http://localhost:8000/score \
   -H "Content-Type: application/json" \
   -d '{"time": 120, "clicks": 1}'
 ```
+
+### API 문서 확인
+FastAPI는 자동으로 대화형 API 문서를 생성합니다:
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
 
 ## 🛠️ 기술 스택
 
@@ -90,10 +99,12 @@ curl -X POST http://localhost:8000/score \
 - 🎨 **CSS3** - 스타일링 (그라디언트, 애니메이션)
 
 ### 백엔드
-- 🐍 **Python Flask** - 웹 프레임워크
-- 🔗 **Flask-CORS** - CORS 처리
+- ⚡ **FastAPI** - 현대적인 고성능 웹 프레임워크
+- 🔗 **CORS Middleware** - CORS 처리
+- 🔍 **Pydantic** - 데이터 검증 및 직렬화
 - 📦 **Dataclasses** - 데이터 모델링
 - 📄 **JSON** - 데이터 저장
+- 📖 **자동 API 문서화** - OpenAPI/Swagger
 
 ## 🎨 주요 기능
 
@@ -102,6 +113,42 @@ curl -X POST http://localhost:8000/score \
 - 📊 **실시간 통계** - 게임 플레이 통계 추적
 - 🏆 **리더보드** - 최고 기록 저장 및 표시
 - 🔄 **상태 관리** - 커스텀 훅을 활용한 깔끔한 상태 관리
+
+## 🐳 Docker로 실행하기
+
+### 개발 환경 (Hot Reload)
+```bash
+# 개발용 컨테이너 실행 (자동 재시작)
+./run-docker.sh dev up
+
+# 또는 상세 관리 스크립트 사용
+./docker-setup.sh start dev
+```
+
+### 프로덕션 환경
+```bash
+# 프로덕션용 컨테이너 실행
+./run-docker.sh prod up
+
+# 또는
+./docker-setup.sh start prod
+```
+
+### Docker 관리 명령어
+```bash
+# 로그 확인
+./docker-setup.sh logs
+./docker-setup.sh logs backend  # 백엔드만
+
+# 상태 확인
+./docker-setup.sh status
+
+# 헬스 체크
+./docker-setup.sh health
+
+# 정리
+./docker-setup.sh cleanup
+```
 
 ## 🧪 개발 및 테스트
 
