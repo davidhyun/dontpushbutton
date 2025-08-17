@@ -42,3 +42,9 @@ pip-delete-this-directory.txt
 
 # Game data
 scores.json
+
+# Claude Code - 개인 설정
+.claude/settings.local.json
+.claude/history/
+.claude/cache/
+.claude/logs/
